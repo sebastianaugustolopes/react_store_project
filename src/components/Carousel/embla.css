@@ -1,0 +1,57 @@
+/* Base Embla Styles */
+@import "tailwindcss";
+
+.embla {
+  @apply max-w-full mx-auto;
+  --slide-spacing: 1rem;
+  --slide-size: 70%;
+}
+
+.embla__viewport {
+  @apply overflow-hidden;
+}
+
+.embla__container {
+  @apply flex touch-pan-y;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+
+.embla__slide {
+  @apply m-3 rounded-[20px] flex items-center justify-center relative bg-cover bg-center min-h-[58vh] max-md:min-h-[48vh];
+  flex: 0 0 var(--slide-size);
+}
+
+.embla__buttons {
+  @apply mx-auto flex justify-center gap-2;
+}
+
+.embla__button {
+  @apply appearance-none inline-flex justify-center items-center cursor-pointer;
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+.embla__button:disabled {
+  @apply text-gray-400;
+}
+
+.embla__button__svg {
+  @apply w-[35%] h-[35%];
+}
+
+/* Overlay Styles */
+.embla__slide__overlay {
+  @apply absolute top-0 left-0 right-0 bottom-0 bg-black/40 p-5 flex flex-col justify-center rounded-[20px] cursor-pointer;
+}
+
+.embla__slide__overlay .logoUrl {
+  @apply w-[150px] mb-4;
+}
+
+.embla__slide__overlay p {
+  @apply text-[0.9em] w-[45%] max-md:w-[60%] max-sm:w-[85%] max-sm:text-[0.8em];
+}
+
+.embla__slide__overlay .price {
+  @apply font-bold text-xl mb-5;
+}
