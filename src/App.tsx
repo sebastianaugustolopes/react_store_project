@@ -1,7 +1,9 @@
-function App() {
+import Header from './components/Header/index'
+const App = () => {
+  // Carousel configuration options (loop
   return (
     <>
-      <div className="bg-amber-700">Teste</div>
+      <Header />
     </>
   )
 }
