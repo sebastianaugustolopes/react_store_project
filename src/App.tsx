@@ -1,14 +1,19 @@
-import type { EmblaOptionsType } from "embla-carousel"
-import EmblaCarousel from "./components/Carousel/EmblaCarousel.tsx"
-import "./components/Carousel/embla.css" 
+import type { EmblaOptionsType } from 'embla-carousel'
+import EmblaCarousel from './components/Carousel/EmblaCarousel.tsx'
+import './components/Carousel/embla.css'
 import Header from './components/Header/index'
- const OPTIONS: EmblaOptionsType = { loop: true }
+
+import { useState } from 'react'
+
 const App = () => {
-  // Carousel configuration options (loop
+  const OPTIONS: EmblaOptionsType = { loop: true }
+  const [isMenuHovered, setIsMenuHovered] = useState(false)
   return (
     <>
-      <Header />
-      <EmblaCarousel options={OPTIONS} />
+      <Header onMenuHover={setIsMenuHovered} />
+      <main className={`transition-all duration-300 ease-in-out ${isMenuHovered ? 'blur-sm' : ''}`}>
+        <EmblaCarousel options={OPTIONS} />
+      </main>
     </>
   )
 }

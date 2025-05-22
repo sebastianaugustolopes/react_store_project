@@ -1,5 +1,12 @@
-import { CalendarDays, ChevronDown, ChevronUp, X } from 'lucide-react'
-import React, { useState } from 'react'
+import {
+  CalendarDays,
+  ChevronDown,
+  ChevronUp,
+  Github,
+  Linkedin,
+  MessageSquare,
+  X,
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 // Shadcn components
@@ -27,14 +34,22 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 
-import logo from '@/assets/images/logo.png'
-import avatar from '@/assets/images/avatar.jpg'
-import { cn } from '@/lib/utils'
+// Import images using relative paths instead of alias paths
+import logo from '../../assets/images/logo.png'
+import avatar from '../../assets/images/avatar.jpg'
+import { AuthorCard } from './AthorCard'
+import { SocialLink } from './NavigationMenuLink'
+import { useState } from 'react'
 
-const Header = () => {
+const Header = ({ onMenuHover }: { onMenuHover?: (isHovered: boolean) => void }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [isClosing, setIsClosing] = useState(false)
 
+  const handleMenuHover = (isHovered: boolean) => {
+    if (onMenuHover) {
+      onMenuHover(isHovered)
+    }
+  }
   const handleClose = () => {
     setIsClosing(true)
     setTimeout(() => {
@@ -44,7 +59,7 @@ const Header = () => {
   }
 
   return (
-    <header className="grid grid-cols-[auto_1fr_auto]  items-center px-5 py-4 bg-neutral-950/60">
+    <header className="grid grid-cols-[auto_1fr_auto] items-center px-5 py-4 bg-neutral-950/60">
       <div className="flex gap-x-2">
         <img className="w-9" src={logo} alt="Logo" />
         <span
@@ -55,8 +70,12 @@ const Header = () => {
         </span>
       </div>
 
-      {/* Desktop Menu Navigation  */}
-      <NavigationMenu className="justify-self-center">
+      {/* Navegação do menu desktop */}
+      <NavigationMenu
+        className="justify-self-center"
+        onMouseEnter={() => handleMenuHover(true)}
+        onMouseLeave={() => handleMenuHover(false)}
+      >
         <NavigationMenuList className="hidden sm:flex">
           <NavigationMenuItem>
             <Link to="/docs">
@@ -66,7 +85,7 @@ const Header = () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger>Categorias</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid w-[300px] gap-3 p-4 md:w-[440px] md:grid-cols-2 lg:w-[600px] ">
+              <ul className="grid w-[300px] gap-3 p-2 md:w-[440px] md:grid-cols-2 lg:w-[600px] ">
                 <li>Categorias...</li>
               </ul>
             </NavigationMenuContent>
@@ -75,80 +94,43 @@ const Header = () => {
           <NavigationMenuItem>
             <NavigationMenuTrigger>Sobre mim</NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid gap-4 p-6 md:w-[440px] lg:w-[720px] lg:grid-cols-[.8fr_1fr]">
-                {/* Author Bio Section */}
-                <li className="row-span-3">
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="flex h-full w-full select-none flex-col justify-end rounded-lg bg-gradient-to-b from-slate-50 to-slate-100 p-6 no-underline outline-none focus:shadow-md dark:from-slate-800/50 dark:to-slate-900 transition-shadow duration-200 hover:shadow-lg"
-                      href="#" // Link to author page
-                    >
-                      {/* Author Image*/}
-                      <img
-                        src={avatar}
-                        alt="Foto do autor"
-                        className="w-20 h-20 rounded-full mb-5 object-cover border-2 border-white dark:border-slate-700 shadow-sm transition-transform duration-200 hover:scale-105"
-                      />
-                      {/* Author Name/Title */}
-                      <div className="mb-2 text-xl font-semibold text-slate-800 dark:text-slate-200">
-                        Sebastian Augusto
-                      </div>
-                      {/* Author Bio */}
-                      <p className="text-base leading-relaxed text-slate-600 dark:text-slate-400">
-                        Desenvolvedor Web Full Stack especializado em JavaScript, com ênfase na
-                        criação de interfaces de usuário modernas e no desenvolvimento de aplicações
-                        de página única (SPA).
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                {/* Social Links Section */}
+              <ul className="grid gap-x-6 p-4 md:w-[500px] lg:w-[750px] lg:grid-cols-[.8fr_1fr] bg-gradient-to-br from-zinc-900/90 to-black/95 backdrop-blur-xl rounded-2xl border border-zinc-800/60 shadow-2xl shadow-purple-900/10">
+                <AuthorCard
+                  image={avatar}
+                  name="Sebastian Augusto"
+                  bio="Desenvolvedor Web Full Stack especializado em JavaScript, com ênfase na criação de interfaces de usuário modernas e no desenvolvimento de aplicações de página única (SPA)."
+                />
 
-                {/* GitHub Link */}
-                <ListItem
-                  href="https://github.com/sebastianaugustolopes"
-                  title="GitHub"
-                  target="_blank"
-                  className="group"
-                >
-                  <span className="font-medium text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-150">
-                    Acesse repositórios com projetos pessoais, protótipos e contribuições open
-                    source no GitHub.
-                  </span>
-                </ListItem>
+                {/* Seção de links sociais */}
+                <div className="space-y-4">
+                  <SocialLink
+                    href="https://github.com/sebastianaugustolopes"
+                    title="GitHub"
+                    icon={<Github className="h-5 w-5" />}
+                    description="Acesse repositórios com projetos pessoais, protótipos e contribuições open source no GitHub."
+                  />
 
-                {/* LinkedIn Link */}
-                <ListItem
-                  href="https://www.linkedin.com/in/sebastianaugusto/"
-                  title="LinkedIn"
-                  target="_blank"
-                  className="group"
-                >
-                  <span className="text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-150">
-                    Perfil profissional com experiências, tecnologias utilizadas e histórico de
-                    projetos.
-                  </span>
-                </ListItem>
+                  <SocialLink
+                    href="https://www.linkedin.com/in/sebastianaugusto/"
+                    title="LinkedIn"
+                    icon={<Linkedin className="h-5 w-5" />}
+                    description="Perfil profissional com experiências, tecnologias utilizadas e histórico de projetos."
+                  />
 
-                {/* Thereads Link */}
-                <ListItem
-                  href="https://www.threads.com/@_ssebastianaugusto"
-                  title="Threads"
-                  target="_blank"
-                  className="group"
-                >
-                  <span className="text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-150">
-                    Publicações técnicas e comentários sobre tendências em desenvolvimento web e
-                    JavaScript.
-                  </span>
-                </ListItem>
+                  <SocialLink
+                    href="https://www.threads.com/@_ssebastianaugusto"
+                    title="Threads"
+                    icon={<MessageSquare className="h-5 w-5" />}
+                    description="Publicações técnicas e comentários sobre tendências em desenvolvimento web e JavaScript."
+                  />
+                </div>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
 
-      {/* Hamburger button (mobile) */}
+      {/* Sobreposição do menu mobile */}
       {menuOpen || isClosing ? (
         <div className="fixed inset-0 z-50 bg-black/50  backdrop-blur-sm ">
           <aside
@@ -156,7 +138,7 @@ const Header = () => {
               isClosing ? '-translate-x-full ' : 'translate-x-0 '
             }`}
           >
-            {/* Close button */}
+            {/* Botão de fechar */}
             <div className="flex justify-end mb-3">
               <button
                 onClick={() => {
@@ -169,7 +151,7 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Navigation */}
+            {/* Navegação */}
             <nav className="flex flex-col gap-3 ">
               <Link
                 to="/docs"
@@ -210,7 +192,7 @@ const Header = () => {
 
       <Sheet>
         <SheetTrigger className="flex items-center gap-2 transition-colors duration-200">
-          {/* Cart icon: visible until LG */}
+          {/* Ícone do carrinho: visível até LG */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -230,7 +212,7 @@ const Header = () => {
             <path d="m9 11 1 9" />
           </svg>
 
-          {/* "Cart" text: visible from LG */}
+          {/* Texto "Carrinho": visível a partir de LG */}
           <span className="hidden lg:inline text-neutral-400 hover:text-white cursor-pointer">
             Carrinho
           </span>
@@ -249,27 +231,5 @@ const Header = () => {
     </header>
   )
 }
-
-const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWithoutRef<'a'>>(
-  ({ className, title, children, ...props }, ref) => {
-    return (
-      <li>
-        <NavigationMenuLink asChild>
-          <a
-            ref={ref}
-            className={cn(
-              'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-              className
-            )}
-            {...props}
-          >
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
-          </a>
-        </NavigationMenuLink>
-      </li>
-    )
-  }
-)
 
 export default Header
