@@ -3,10 +3,10 @@ import useEmblaCarousel from 'embla-carousel-react'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import AddCartButton from '@/components/Button/AddCartButton.tsx'
 import Button from '@/components/Button/index'
 
 import { NextButton, PrevButton, usePrevNextButtons } from './EmblaCarouselArrowButtons'
+import { CirclePlus } from 'lucide-react'
 
 const TWEEN_FACTOR_BASE = 0.84
 const numberWithinRange = (number: number, min: number, max: number): number =>
@@ -161,7 +161,9 @@ const EmblaCarousel: React.FC<EmblaCarouselProps> = ({ options }) => {
                     <Button type="link" title="Visualizar Jogo" to={`/jogo/${slide.gamePageUrl}`}>
                       {slide.buttonText ?? 'Jogar agora'}
                     </Button>
-                    <AddCartButton />
+                    <Button type="button" title="Adicionar ao carrinho" variant="default">
+                      <CirclePlus /> Adicionar ao Carrinho
+                    </Button>
                   </div>
                 </Link>
               </div>
