@@ -5,11 +5,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 model Game {
   id       String @id @default(uuid())
   title    String
   imageUrl String
+  videoUrl String
 
   // Dados dos slides (games em destaque)
   logoUrl     String?
@@ -39,7 +39,6 @@ enum DisplayArea {
   GALLERY
   BOTH
 }
-
 
 datasource db {
   provider = "sqlite"
